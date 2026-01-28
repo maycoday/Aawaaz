@@ -4,11 +4,403 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Aawaaj - Anonymous Workplace Harassment Reporting</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <path d="M16 2L4 8V16C4 23 9 28 16 30C23 28 28 23 28 16V8L16 2Z" fill="#6366f1" stroke="#6366f1" stroke-width="2"/>
+                    <path d="M12 16L15 19L20 13" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>Aawaaj</span>
+            </div>
+            <div class="nav-links">
+                <a href="#report" class="active">Report</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#authorities">For Authorities</a>
+                <a href="#patterns">Pattern Insights</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Your Voice. <span class="gradient-text">Your Control.</span></h1>
+                <p class="hero-subtitle">Report workplace harassment anonymously with military-grade encryption. No accounts. No tracking. Complete privacy.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Anonymous</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">AES-256</div>
+                        <div class="stat-label">Encryption</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">Zero</div>
+                        <div class="stat-label">Tracking</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Report Form Section -->
+        <section id="report" class="report-section">
+            <div class="section-header">
+                <h2>Submit Anonymous Report</h2>
+                <p>All data is encrypted in your browser before transmission. We never see your information.</p>
+            </div>
+
+            <div class="encryption-status" id="encryptionStatus">
+                <div class="status-badge">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 2L3 5V10C3 14 6 17 10 18C14 17 17 14 17 10V5L10 2Z"/>
+                    </svg>
+                    <span>Client-Side Encryption Active</span>
+                </div>
+            </div>
+
+            <form id="reportForm" class="report-form">
+                <!-- Incident Details -->
+                <div class="form-section">
+                    <h3>Incident Details</h3>
+                    
+                    <div class="form-group">
+                        <label for="incidentType">Type of Incident</label>
+                        <select id="incidentType" required>
+                            <option value="">Select incident type</option>
+                            <option value="verbal">Verbal Harassment</option>
+                            <option value="physical">Physical Harassment</option>
+                            <option value="sexual">Sexual Harassment</option>
+                            <option value="discrimination">Discrimination</option>
+                            <option value="bullying">Workplace Bullying</option>
+                            <option value="retaliation">Retaliation</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="incidentDate">Date of Incident</label>
+                        <input type="date" id="incidentDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="department">Department (Optional - Anonymized)</label>
+                        <select id="department">
+                            <option value="">Prefer not to say</option>
+                            <option value="engineering">Engineering</option>
+                            <option value="sales">Sales</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="hr">Human Resources</option>
+                            <option value="finance">Finance</option>
+                            <option value="operations">Operations</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description of Incident</label>
+                        <textarea id="description" rows="6" placeholder="Please describe what happened in as much detail as you're comfortable sharing..." required></textarea>
+                        <small>This will be encrypted before leaving your browser</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="evidence">Supporting Evidence (Optional)</label>
+                        <input type="file" id="evidence" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                        <small>Files will be encrypted client-side</small>
+                    </div>
+                </div>
+
+                <!-- Authority Selection -->
+                <div class="form-section">
+                    <h3>Select Reporting Authorities</h3>
+                    <p class="section-note">Choose who can access this complaint. You control who sees your report.</p>
+                    
+                    <div class="authority-grid">
+                        <label class="authority-card">
+                            <input type="checkbox" name="authority" value="hr">
+                            <div class="card-content">
+                                <div class="card-icon">🏢</div>
+                                <div class="card-title">Internal HR</div>
+                                <div class="card-desc">Company Human Resources</div>
+                            </div>
+                        </label>
+
+                        <label class="authority-card recommended">
+                            <input type="checkbox" name="authority" value="icc" checked>
+                            <div class="card-content">
+                                <div class="card-icon">⚖️</div>
+                                <div class="card-title">ICC / POSH Committee</div>
+                                <div class="card-desc">Internal Complaints Committee</div>
+                                <div class="recommended-badge">Recommended</div>
+                            </div>
+                        </label>
+
+                        <label class="authority-card recommended">
+                            <input type="checkbox" name="authority" value="ngo" checked>
+                            <div class="card-content">
+                                <div class="card-icon">🤝</div>
+                                <div class="card-title">External NGO</div>
+                                <div class="card-desc">Independent Support Organization</div>
+                                <div class="recommended-badge">Recommended</div>
+                            </div>
+                        </label>
+
+                        <label class="authority-card">
+                            <input type="checkbox" name="authority" value="legal">
+                            <div class="card-content">
+                                <div class="card-icon">⚖️</div>
+                                <div class="card-title">Legal Authority</div>
+                                <div class="card-desc">Government Body (Future)</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Note:</strong> If HR is involved in the harassment, you can bypass them entirely by not selecting them above.
+                    </div>
+                </div>
+
+                <!-- Encryption Visualization -->
+                <div class="encryption-visual" id="encryptionVisual">
+                    <div class="encryption-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>Generate Key</strong>
+                            <small>AES-256 symmetric key</small>
+                        </div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="encryption-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Encrypt Data</strong>
+                            <small>In your browser</small>
+                        </div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="encryption-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Encrypt Keys</strong>
+                            <small>For selected authorities</small>
+                        </div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="encryption-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <strong>Secure Storage</strong>
+                            <small>Encrypted database</small>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="submitBtn">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 1L3 4V9C3 13 6 16 10 17C14 16 17 13 17 9V4L10 1Z"/>
+                    </svg>
+                    <span>Encrypt & Submit Report</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="how-it-works">
+            <h2>How Aawaaj Protects You</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Client-Side Encryption</h3>
+                    <p>Your complaint is encrypted in your browser using AES-256 before transmission. We never see plaintext data.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎭</div>
+                    <h3>True Anonymity</h3>
+                    <p>No accounts, no login, no IP logging. Your identity remains completely private.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👤</div>
+                    <h3>You Choose Authorities</h3>
+                    <p>Select who can access your report. Bypass HR if needed. You're in control.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Zero-Trust Architecture</h3>
+                    <p>Even our servers can't decrypt your data. Only selected authorities with private keys can access it.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Pattern Detection</h3>
+                    <p>Identify repeat offenders through anonymized metadata analysis without exposing reporters.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h3>POSH Compliant</h3>
+                    <p>Aligned with legal requirements while prioritizing survivor safety and privacy.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pattern Detection Demo -->
+        <section id="patterns" class="patterns-section">
+            <h2>Pattern Detection Insights</h2>
+            <p class="section-subtitle">Anonymized metadata helps identify systemic issues</p>
+            
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <h3>Department Trends</h3>
+                        <span class="badge">Anonymized</span>
+                    </div>
+                    <div class="chart-placeholder">
+                        <div class="bar" style="height: 45%; --color: #ef4444;">
+                            <span class="bar-label">Sales</span>
+                            <span class="bar-value">12</span>
+                        </div>
+                        <div class="bar" style="height: 70%; --color: #f59e0b;">
+                            <span class="bar-label">Eng</span>
+                            <span class="bar-value">19</span>
+                        </div>
+                        <div class="bar" style="height: 30%; --color: #10b981;">
+                            <span class="bar-label">Mktg</span>
+                            <span class="bar-value">8</span>
+                        </div>
+                        <div class="bar" style="height: 55%; --color: #ef4444;">
+                            <span class="bar-label">Ops</span>
+                            <span class="bar-value">15</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <h3>Incident Types</h3>
+                        <span class="badge">Last 30 Days</span>
+                    </div>
+                    <div class="incident-list">
+                        <div class="incident-item">
+                            <span>Sexual Harassment</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 40%;"></div>
+                            </div>
+                            <span>40%</span>
+                        </div>
+                        <div class="incident-item">
+                            <span>Verbal Abuse</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 30%;"></div>
+                            </div>
+                            <span>30%</span>
+                        </div>
+                        <div class="incident-item">
+                            <span>Discrimination</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 20%;"></div>
+                            </div>
+                            <span>20%</span>
+                        </div>
+                        <div class="incident-item">
+                            <span>Retaliation</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 10%;"></div>
+                            </div>
+                            <span>10%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-card alert-card">
+                    <div class="alert-icon">⚠️</div>
+                    <h3>Repeat Pattern Detected</h3>
+                    <p>3 similar incidents reported in Engineering department within 2 weeks</p>
+                    <button class="btn-secondary">View Details (ICC Only)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Authority Portal Demo -->
+        <section id="authorities" class="authority-portal">
+            <h2>For Authorized Entities</h2>
+            <div class="portal-demo">
+                <div class="portal-card">
+                    <h3>🔐 Authority Access Portal</h3>
+                    <p>ICC, NGO, and authorized entities can access complaints encrypted specifically for them.</p>
+                    <div class="demo-login">
+                        <input type="text" placeholder="Authority Public Key ID" readonly value="ICC_KEY_2026_01">
+                        <button class="btn-secondary">Decrypt Assigned Complaints</button>
+                    </div>
+                    <div class="access-info">
+                        <small>✅ Only authorities selected by reporter can decrypt</small>
+                        <small>✅ Requires private key possession</small>
+                        <small>✅ Access logs maintained for accountability</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">✓</div>
+            <h2>Report Submitted Successfully</h2>
+            <p>Your complaint has been encrypted and securely stored. Selected authorities will be notified.</p>
+            <div class="reference-code">
+                <label>Your Reference Code:</label>
+                <div class="code-display" id="referenceCode">XXXX-XXXX-XXXX</div>
+                <small>Save this code (optional) if you want to follow up anonymously</small>
+            </div>
+            <div class="encryption-details">
+                <h4>Encryption Details:</h4>
+                <ul>
+                    <li>✓ Data encrypted with AES-256-GCM</li>
+                    <li>✓ Unique encryption key generated</li>
+                    <li>✓ Key encrypted for <span id="authorityCount">0</span> authorities</li>
+                    <li>✓ Zero plaintext storage</li>
+                </ul>
+            </div>
+            <button class="btn-primary" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Aawaaj</h4>
+                    <p>Anonymous workplace harassment reporting platform built for survivors.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="#">POSH Act Information</a>
+                    <a href="#">NGO Partners</a>
+                    <a href="#">Legal Support</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Project Links</h4>
+                    <a href="https://github.com/yourusername/aawaaj" target="_blank">🔗 GitHub Repository</a>
+                    <a href="https://drive.google.com/your-demo" target="_blank">🎥 Demo Video</a>
+                    <a href="#" target="_blank">📊 Presentation</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>🔒 Built with privacy-first principles | WS010 Hackathon Project 2026</p>
+            </div>
+        </div>
+    </footer>
+
     <script src="index.js"></script>
 </body>
 </html>
