@@ -16,7 +16,7 @@ import (
 // CreateComplaint handles encrypted complaint submission
 func CreateComplaint(w http.ResponseWriter, r *http.Request) {
 	var complaint ComplaintPayload
-	
+
 	if err := json.NewDecoder(r.Body).Decode(&complaint); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
@@ -35,9 +35,9 @@ func CreateComplaint(w http.ResponseWriter, r *http.Request) {
 
 	// Store in database (mock for demo)
 	// In production: db.Create(&complaint)
-	
-	log.Printf("✅ Complaint received: %s | Authorities: %d | Type: %s", 
-		complaint.ReferenceCode, 
+
+	log.Printf("✅ Complaint received: %s | Authorities: %d | Type: %s",
+		complaint.ReferenceCode,
 		len(complaint.EncryptedKeys),
 		complaint.Metadata.IncidentType)
 
@@ -63,7 +63,7 @@ func GetComplaint(w http.ResponseWriter, r *http.Request) {
 
 	// In production: Verify authority authentication
 	// Check if requesting authority has access to this complaint
-	
+
 	// Mock response
 	complaint := map[string]interface{}{
 		"id":            id,
@@ -164,24 +164,24 @@ func GetAuthority(w http.ResponseWriter, r *http.Request) {
 func GetPatterns(w http.ResponseWriter, r *http.Request) {
 	patterns := []PatternMetadata{
 		{
-			PatternHash:      "abc123",
-			IncidentType:     "sexual_harassment",
-			Department:       "engineering",
-			OccurrenceCount:  3,
-			SeverityScore:    0.75,
-			AlertTriggered:   true,
-			FirstDetected:    time.Now().Add(-168 * time.Hour), // 1 week ago
-			LastUpdated:      time.Now().Add(-24 * time.Hour),
+			PatternHash:     "abc123",
+			IncidentType:    "sexual_harassment",
+			Department:      "engineering",
+			OccurrenceCount: 3,
+			SeverityScore:   0.75,
+			AlertTriggered:  true,
+			FirstDetected:   time.Now().Add(-168 * time.Hour), // 1 week ago
+			LastUpdated:     time.Now().Add(-24 * time.Hour),
 		},
 		{
-			PatternHash:      "def456",
-			IncidentType:     "verbal_harassment",
-			Department:       "sales",
-			OccurrenceCount:  2,
-			SeverityScore:    0.50,
-			AlertTriggered:   false,
-			FirstDetected:    time.Now().Add(-72 * time.Hour),
-			LastUpdated:      time.Now(),
+			PatternHash:     "def456",
+			IncidentType:    "verbal_harassment",
+			Department:      "sales",
+			OccurrenceCount: 2,
+			SeverityScore:   0.50,
+			AlertTriggered:  false,
+			FirstDetected:   time.Now().Add(-72 * time.Hour),
+			LastUpdated:     time.Now(),
 		},
 	}
 
@@ -240,7 +240,7 @@ func GetAuthorityComplaints(w http.ResponseWriter, r *http.Request) {
 // DecryptComplaint handles decryption request from authority
 func DecryptComplaint(w http.ResponseWriter, r *http.Request) {
 	var req DecryptRequest
-	
+
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
@@ -254,12 +254,12 @@ func DecryptComplaint(w http.ResponseWriter, r *http.Request) {
 	// 5. Log access in audit trail
 
 	response := map[string]interface{}{
-		"success":            true,
-		"encryptedKey":       "base64_encrypted_symmetric_key...",
-		"encryptedData":      "base64_encrypted_complaint_data...",
-		"iv":                 "base64_iv...",
-		"message":            "Encrypted data retrieved. Decrypt with your private key.",
-		"accessLogged":       true,
+		"success":       true,
+		"encryptedKey":  "base64_encrypted_symmetric_key...",
+		"encryptedData": "base64_encrypted_complaint_data...",
+		"iv":            "base64_iv...",
+		"message":       "Encrypted data retrieved. Decrypt with your private key.",
+		"accessLogged":  true,
 	}
 
 	log.Printf("🔓 Authority access logged for complaint: %s", req.ComplaintID)
@@ -307,8 +307,8 @@ func detectPattern(metadata ComplaintMetadata) {
 	// In production: Query database for similar incidents
 	// Check time windows, departments, incident types
 	// Trigger alerts if threshold exceeded
-	
-	log.Printf("🔍 Pattern detection running for: %s in %s", 
-		metadata.IncidentType, 
+
+	log.Printf("🔍 Pattern detection running for: %s in %s",
+		metadata.IncidentType,
 		metadata.Department)
 }

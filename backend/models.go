@@ -11,13 +11,13 @@ type ComplaintPayload struct {
 	// Encrypted data
 	EncryptedData string `json:"encryptedData" binding:"required"`
 	IV            string `json:"iv" binding:"required"`
-	
+
 	// Encrypted keys for each authority
 	EncryptedKeys []EncryptedKey `json:"encryptedKeys" binding:"required"`
-	
+
 	// Anonymized metadata (not encrypted)
 	Metadata ComplaintMetadata `json:"metadata"`
-	
+
 	// System fields
 	ReferenceCode string    `json:"referenceCode"`
 	SubmittedAt   time.Time `json:"submittedAt"`
@@ -26,10 +26,10 @@ type ComplaintPayload struct {
 
 // EncryptedKey stores the symmetric key encrypted for each authority
 type EncryptedKey struct {
-	AuthorityID   string `json:"authorityId" binding:"required"`
-	EncryptedKey  string `json:"encryptedKey" binding:"required"`
-	KeyAlgorithm  string `json:"keyAlgorithm"`
-	Timestamp     time.Time `json:"timestamp"`
+	AuthorityID  string    `json:"authorityId" binding:"required"`
+	EncryptedKey string    `json:"encryptedKey" binding:"required"`
+	KeyAlgorithm string    `json:"keyAlgorithm"`
+	Timestamp    time.Time `json:"timestamp"`
 }
 
 // ComplaintMetadata contains non-sensitive, anonymized information
@@ -119,10 +119,10 @@ type AuditLog struct {
 
 // DepartmentStats for analytics
 type DepartmentStats struct {
-	Department      string         `json:"department"`
-	IncidentCounts  map[string]int `json:"incidentCounts"`
-	TotalIncidents  int            `json:"totalIncidents"`
-	TrendDirection  string         `json:"trendDirection"` // increasing, decreasing, stable
+	Department     string         `json:"department"`
+	IncidentCounts map[string]int `json:"incidentCounts"`
+	TotalIncidents int            `json:"totalIncidents"`
+	TrendDirection string         `json:"trendDirection"` // increasing, decreasing, stable
 }
 
 // TemporalPattern for time-based analysis

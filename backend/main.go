@@ -20,19 +20,19 @@ func main() {
 	api.HandleFunc("/complaints", CreateComplaint).Methods("POST", "OPTIONS")
 	api.HandleFunc("/complaints/{id}", GetComplaint).Methods("GET", "OPTIONS")
 	api.HandleFunc("/complaints", ListComplaints).Methods("GET", "OPTIONS")
-	
+
 	// Authority routes
 	api.HandleFunc("/authorities", ListAuthorities).Methods("GET", "OPTIONS")
 	api.HandleFunc("/authorities/{id}", GetAuthority).Methods("GET", "OPTIONS")
-	
+
 	// Pattern detection routes
 	api.HandleFunc("/patterns", GetPatterns).Methods("GET", "OPTIONS")
 	api.HandleFunc("/patterns/department", GetDepartmentPatterns).Methods("GET", "OPTIONS")
-	
+
 	// Authority access routes (requires authentication)
 	api.HandleFunc("/authority/complaints", GetAuthorityComplaints).Methods("GET", "OPTIONS")
 	api.HandleFunc("/authority/decrypt", DecryptComplaint).Methods("POST", "OPTIONS")
-	
+
 	// Health check
 	router.HandleFunc("/health", HealthCheck).Methods("GET")
 
@@ -60,7 +60,7 @@ func main() {
 	log.Printf("🚀 Aawaaj API Server starting on port %s", port)
 	log.Printf("🔒 Zero-trust architecture enabled")
 	log.Printf("🛡️ CORS enabled for React frontend")
-	
+
 	if err := http.ListenAndServe(":"+port, handler); err != nil {
 		log.Fatal("Server failed to start:", err)
 	}
