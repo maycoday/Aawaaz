@@ -64,28 +64,36 @@ Choose who can access your complaint:
 
 ## 💻 Technology Stack
 
-### Frontend
-- **React** - UI framework
-- **HTML/CSS/JavaScript** - Core web technologies
-- **Web Crypto API** - Client-side encryption (AES-256-GCM)
-- **Responsive Design** - Mobile and desktop optimized
+### Frontend (React + Vite)
+- **React 18** - Modern UI framework with hooks
+- **Vite** - Lightning-fast build tool and dev server
+- **React Router** - Client-side routing
+- **Axios** - HTTP client for API communication
+- **Web Crypto API** - Native browser encryption (AES-256-GCM)
+- **CSS3** - Modern responsive styling
+- **No tracking libraries** - Privacy-first approach
 
-### Backend
-- **Go (Golang)** - Secure, performant API server
-- **RESTful APIs** - JSON-based communication
-- **JWT/OAuth** - Authority authentication (optional)
-- **Key Management** - RSA/ECC public-key infrastructure
+### Backend (Go)
+- **Go 1.21+** - High-performance, concurrent server
+- **Gorilla Mux** - HTTP router and URL matcher
+- **CORS Middleware** - Cross-origin resource sharing
+- **PostgreSQL Driver** - Database connectivity
+- **JWT** - Authority authentication
+- **RESTful API** - JSON-based endpoints
+- **Zero-trust design** - Server never decrypts data
 
 ### Database
-- **PostgreSQL** - Production database (via Supabase)
-- **Row-Level Security** - Additional access control
+- **PostgreSQL 15+** - Production database (via Supabase)
+- **Row-Level Security** - Fine-grained access control
 - **Encrypted at Rest** - Database-level encryption
-- **Audit Logging** - Track authority access (not reporter activity)
+- **Audit Logging** - Track authority access only
+- **Anonymized Views** - Privacy-preserving analytics
 
 ### Deployment
 - **Vercel** - Frontend hosting with edge optimization
-- **Supabase** - Backend services and database
+- **Supabase** - Managed PostgreSQL + backend services
 - **CDN** - Global content delivery for fast access
+- **Environment Variables** - Secure configuration management
 
 ---
 
@@ -152,36 +160,94 @@ Choose who can access your complaint:
 
 ```
 Aawaaj/
-├── index.html              # Main UI with complaint form
-├── style.css               # Modern, responsive styling
-├── index.js                # Client-side encryption logic
-├── database_schema.sql     # PostgreSQL schema for Supabase
-├── HACKATHON_SLIDE.md      # Presentation slide content
-└── README.md               # This file
+├── frontend/                    # React frontend application
+│   ├── src/
+│   │   ├── components/          # React components
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Hero.jsx
+│   │   │   ├── ReportForm.jsx   # Main form with encryption
+│   │   │   ├── HowItWorks.jsx
+│   │   │   ├── PatternDetection.jsx
+│   │   │   ├── AuthorityPortal.jsx
+│   │   │   └── Footer.jsx
+│   │   ├── services/            # Business logic
+│   │   │   ├── encryption.js    # Web Crypto API implementation
+│   │   │   └── api.js           # Axios API client
+│   │   ├── App.jsx              # Main app component
+│ **Node.js 18+** and npm/yarn
+- **Go 1.21+** 
+- **PostgreSQL 15+** or Supabase account
+- Modern web browser with Web Crypto API support
+
+### Quick Start (Development)
+
+#### 1. Clone Repository
+```bash
+git clone https://github.com/yourusername/aawaaj.git
+cd aawaaj
 ```
 
----
+#### 2. Setup Database
+```bash
+# Create Supabase project at supabase.com
+# Copy database_schema.sql contents
+# Run in Supabase SQL Editor
+```
 
-## 🚀 Getting Started
+#### 3. Start Backend (Terminal 1)
+```bash
+cd backend
 
-### Prerequisites
+# Install Go dependencies
+go mod download
 
-- Modern web browser with Web Crypto API support
-- (For production) PostgreSQL database or Supabase account
-- (For production) Go 1.20+ for backend
+# Set up environment
+cp .env.example .env
+# Edit .env with your database credentials
 
-### Local Development
+# Run server
+go run .
+# Server starts on http://localhost:8080
+```
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/aawaaj.git
-   cd aawaaj
-   ```
+#### 4. Start Frontend (Terminal 2)
+```bash
+cd frontend
 
-2. **Open in browser**
-   ```bash
-   # Simply open index.html in your browser
-   # Or use a local server:
+# Install npm dependencies
+npm install
+
+# Set up environment
+cp .env.example .env
+
+# Run dev server
+npm run dev
+# Frontend starts on http://localhost:3000
+```
+
+#### 5. Test the Application
+- Open `http://localhost:3000` in browser
+- Fill out the complaint form
+- Select authorities (try bypassing HR!)
+- Click "Encrypt & Submit Report"
+- Check browser console for encryption logs
+- Check terminal for backend API logs
+
+### Production Build
+
+#### Frontend
+```bash
+cd frontend
+npm run build
+# Deploy 'dist' folder to Vercel
+```
+
+#### Backend
+```bash
+cd backend
+CGO_ENABLED=0 GOOS=linux go build -o aawaaj-api
+# Deploy binary to your server
+# Or use a local server:
    python -m http.server 8000
    # Navigate to http://localhost:8000
    ```
