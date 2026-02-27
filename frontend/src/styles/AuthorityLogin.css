@@ -1,0 +1,218 @@
+/* Authority Login Page Styles */
+.authority-login-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: hidden;
+}
+
+.authority-login-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.authority-login-bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+}
+
+.authority-login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 450px;
+  margin: 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.authority-login-header {
+  padding: 40px 40px 30px;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.authority-logo {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.authority-logo svg {
+  width: 100%;
+  height: 100%;
+  color: white;
+}
+
+.authority-login-header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.authority-login-header p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 14px;
+}
+
+.authority-login-form {
+  padding: 40px;
+}
+
+.authority-login-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  color: #c33;
+  font-size: 14px;
+}
+
+.authority-login-error svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.authority-form-group {
+  margin-bottom: 24px;
+}
+
+.authority-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.authority-form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+
+.authority-form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.authority-form-group input:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.authority-login-button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.authority-login-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.authority-login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.authority-login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.authority-login-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.authority-login-footer {
+  padding: 0 40px 40px;
+}
+
+.authority-security-notice {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: #f0f4ff;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.authority-security-notice svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: #667eea;
+  margin-top: 2px;
+}
+
+.authority-security-notice strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.authority-security-notice p {
+  margin: 0;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .authority-login-card {
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .authority-login-header,
+  .authority-login-form,
+  .authority-login-footer {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
