@@ -1,99 +1,134 @@
-import axios from 'axios';
+const STORAGE_KEY = 'aawaaj:complaints';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1';
-
-const apiClient = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
+const AUTHORITY_CATALOG = [
+  {
+    id: 'auth-icc-001',
+    type: 'icc',
+    name: 'Internal Complaints Committee',
+    organization: 'Company ICC',
+    publicKey: 'demo-public-key-icc'
   },
-  timeout: 10000,
-});
-
-// Request interceptor for logging
-apiClient.interceptors.request.use(
-  (config) => {
-    console.log(`🌐 API Request: ${config.method.toUpperCase()} ${config.url}`);
-    return config;
+  {
+    id: 'auth-ngo-001',
+    type: 'ngo',
+    name: 'Independent NGO',
+    organization: 'SafeWork Foundation',
+    publicKey: 'demo-public-key-ngo'
   },
-  (error) => {
-    console.error('❌ API Request Error:', error);
-    return Promise.reject(error);
+  {
+    id: 'auth-hr-001',
+    type: 'hr',
+    name: 'Human Resources',
+    organization: 'People Operations',
+    publicKey: 'demo-public-key-hr'
+  },
+  {
+    id: 'auth-legal-001',
+    type: 'legal',
+    name: 'Legal Aid Partner',
+    organization: 'Pro Bono Legal',
+    publicKey: 'demo-public-key-legal'
   }
-);
+];
 
-// Response interceptor for error handling
-apiClient.interceptors.response.use(
-  (response) => {
-    console.log(`✅ API Response: ${response.status}`, response.data);
-    return response;
-  },
-  (error) => {
-    console.error('❌ API Response Error:', error.response?.data || error.message);
-    return Promise.reject(error);
+const readStoredComplaints = () => {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
   }
-);
+};
+
+const writeStoredComplaints = (complaints) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(complaints));
+};
+
+const calculateDepartmentStats = (complaints) => {
+  const stats = {};
+  complaints.forEach((complaint) => {
+    const department = complaint?.metadata?.department || 'unspecified';
+    if (!stats[department]) {
+      stats[department] = { total: 0 };
+    }
+    stats[department].total += 1;
+  });
+  return stats;
+};
+
+const buildPatternAlerts = (complaints) => {
+  const departmentStats = calculateDepartmentStats(complaints);
+  return Object.entries(departmentStats).map(([department, stats]) => ({
+    department,
+    total: stats.total,
+    alertTriggered: stats.total >= 3
+  }));
+};
 
 const apiService = {
-  // Complaint endpoints
+  // Complaint endpoints (local demo storage)
   submitComplaint: async (encryptedPayload) => {
-    const response = await apiClient.post('/complaints', encryptedPayload);
-    return response.data;
+    const complaints = readStoredComplaints();
+    const now = new Date().toISOString();
+    const entry = {
+      id: `complaint-${Date.now()}`,
+      createdAt: now,
+      ...encryptedPayload
+    };
+    complaints.unshift(entry);
+    writeStoredComplaints(complaints);
+    return { referenceCode: encryptedPayload.referenceCode };
   },
 
   getComplaint: async (id) => {
-    const response = await apiClient.get(`/complaints/${id}`);
-    return response.data;
+    const complaints = readStoredComplaints();
+    return complaints.find((complaint) => complaint.id === id) || null;
   },
 
   listComplaints: async () => {
-    const response = await apiClient.get('/complaints');
-    return response.data;
+    return readStoredComplaints();
   },
 
   // Authority endpoints
   listAuthorities: async () => {
-    const response = await apiClient.get('/authorities');
-    return response.data;
+    return AUTHORITY_CATALOG;
   },
 
   getAuthority: async (id) => {
-    const response = await apiClient.get(`/authorities/${id}`);
-    return response.data;
+    return AUTHORITY_CATALOG.find((authority) => authority.id === id) || null;
   },
 
   // Pattern detection endpoints
   getPatterns: async () => {
-    const response = await apiClient.get('/patterns');
-    return response.data;
+    const complaints = readStoredComplaints();
+    return buildPatternAlerts(complaints);
   },
 
   getDepartmentPatterns: async () => {
-    const response = await apiClient.get('/patterns/department');
-    return response.data;
+    const complaints = readStoredComplaints();
+    return calculateDepartmentStats(complaints);
   },
 
-  // Authority access endpoints (requires authentication)
-  getAuthorityComplaints: async (token) => {
-    const response = await apiClient.get('/authority/complaints', {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return response.data;
+  // Authority access endpoints (demo placeholders)
+  getAuthorityComplaints: async () => {
+    return readStoredComplaints();
   },
 
-  decryptComplaint: async (complaintId, authorityId, token) => {
-    const response = await apiClient.post(
-      '/authority/decrypt',
-      { complaintId, authorityId },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    return response.data;
+  decryptComplaint: async (complaintId, authorityId) => {
+    const complaint = await apiService.getComplaint(complaintId);
+    return {
+      complaint,
+      authorityId,
+      decrypted: false,
+      message: 'Demo mode: decryption happens only in the client.'
+    };
   },
 
   // Health check
   healthCheck: async () => {
-    const response = await apiClient.get('/health');
-    return response.data;
+    return { status: 'ok', mode: 'frontend-only' };
   },
 };
 
