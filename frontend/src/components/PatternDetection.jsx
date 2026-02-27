@@ -8,19 +8,11 @@ function PatternDetection() {
   useEffect(() => {
     // Fetch patterns from API
     apiService.getPatterns()
-      .then(response => {
-        if (response.success && response.patterns) {
-          setPatterns(response.patterns);
-        }
-      })
+      .then(data => setPatterns(data))
       .catch(err => console.error('Failed to load patterns:', err));
 
     apiService.getDepartmentPatterns()
-      .then(response => {
-        if (response.success && response.departments) {
-          setDepartmentStats(response.departments);
-        }
-      })
+      .then(data => setDepartmentStats(data))
       .catch(err => console.error('Failed to load department stats:', err));
   }, []);
 
@@ -36,7 +28,7 @@ function PatternDetection() {
             <span className="badge">Anonymized</span>
           </div>
           <div className="chart-placeholder">
-            {departmentStats && typeof departmentStats === 'object' && Object.entries(departmentStats).map(([dept, stats]) => (
+            {Object.entries(departmentStats).map(([dept, stats]) => (
               <div 
                 key={dept}
                 className="bar" 
@@ -89,7 +81,7 @@ function PatternDetection() {
           </div>
         </div>
 
-        {Array.isArray(patterns) && patterns.filter(p => p.alertTriggered).length > 0 && (
+        {patterns.filter(p => p.alertTriggered).length > 0 && (
           <div className="insight-card alert-card">
             <div className="alert-icon">⚠️</div>
             <h3>Repeat Pattern Detected</h3>
