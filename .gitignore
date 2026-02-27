@@ -47,6 +47,18 @@ temp/
 build/
 out/
 
+# Security - Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+*_private.*
+*.privkey
+
+# Generated scripts (after use)
+update_authority_keys*.sql
+generate_rsa_keys.js
+
 # OS files
 Thumbs.db
 .DS_Store
